@@ -78,4 +78,4 @@ theme: very-simple
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: ssh://git@github.com/junhyan/junhyan.github.io.git
+  repo: http://github.com/junhyan/junhyan.github.io.git
