@@ -532,5 +532,5 @@ static int ixgbe_alloc_q_vector(struct ixgbe_adapter *adapter,
 
 SRIOV及其RDMA部分有时间在之后的博客中进行介绍。
 
-转载请注明: http://jhyan.me/2017/08/19/OVS源码函数栈/
+转载请注明: http://jhyan.me/2017/10/24/网卡驱动（ixgbe为例）/
 
