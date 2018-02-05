@@ -1,8 +1,8 @@
 # Header
 menu:
   ## If your site is put in a subdirectory, set Home as '/child/'
-  Home: /
-  Archives: archives
+  首页: /
+  归档: archives
 
 social:
   email: yanjunhan@163.com
