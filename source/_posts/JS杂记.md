@@ -36,4 +36,16 @@ eval传递字符串，导致性能损失
 
 js中对后续相同的命名变量声明会视而不见
 
+事件冒泡
+事件触发顺序：div - body - html - document
+事件捕获
+事件触发顺序：document- html - body - div
+
+dom2级事件流
+先捕获阶段后目标阶段再到冒泡阶段，顺序为document- html - body - div - body - html - document
+在冒泡阶段可以对事件作出响应
+
+在html中添加点击事件1、存在时差的问题，可以通过try catch来避免，2、拓展事件处理程序的作用域链，在不同浏览器中存在差异
+
+
 转载请注明: http://jhyan.me/2018/04/28/JS杂记/

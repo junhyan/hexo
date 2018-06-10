@@ -108,10 +108,49 @@ observe(library);
 library.book1.name = 'vue权威指南'; // 属性name已经被监听了，现在值为：“vue权威指南”
 library.book2 = '没有此书籍';  // 属性book2已经被监听了，现在值为：“没有此书籍”
 ```
+思路分析中，需要创建一个可以容纳订阅者的消息订阅器Dep，订阅器Dep主要负责收集订阅者，然后再属性变化的时候执行对应订阅者的更新函数。所以显然订阅器需要有一个容器，这个容器就是list，将上面的Observer稍微改造下，植入消息订阅器：
+```js
+function defineReactive(data, key, val) {
+    observe(val); // 递归遍历所有子属性
+    var dep = new Dep();
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            if (是否需要添加订阅者) {
+                dep.addSub(watcher); // 在这里添加一个订阅者
+            }
+            return val;
+        },
+        set: function(newVal) {
+            if (val === newVal) {
+                return;
+            }
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在值为：“' + newVal.toString() + '”');
+            dep.notify(); // 如果数据变化，通知所有订阅者
+        }
+    });
+}
+
+function Dep () {
+    this.subs = [];
+}
+Dep.prototype = {
+    addSub: function(sub) {
+        this.subs.push(sub);
+    },
+    notify: function() {
+        this.subs.forEach(function(sub) {
+            sub.update();
+        });
+    }
+};
+```
 从代码上看，我们将订阅器Dep添加一个订阅者设计在getter里面，这是为了让Watcher初始化进行触发，因此需要判断是否要添加订阅者，至于具体设计方案，下文会详细说明的。在setter函数里面，如果数据变化，就会去通知所有订阅者，订阅者们就会去执行对应的更新的函数。到此为止，一个比较完整Observer已经实现了，接下来我们开始设计Watcher。
 
 ### 2.实现Watcher
-订阅者Watcher在初始化的时候需要将自己添加进订阅器Dep中，那该如何添加呢？我们已经知道监听器Observer是在get函数执行了添加订阅者Wather的操作的，所以我们只要在订阅者Watcher初始化的时候出发对应的get函数去执行添加订阅者操作即可，那要如何触发get的函数，再简单不过了，只要获取对应的属性值就可以触发了，核心原因就是因为我们使用了Object.defineProperty( )进行数据监听。这里还有一个细节点需要处理，我们只要在订阅者Watcher初始化的时候才需要添加订阅者，所以需要做一个判断操作，因此可以在订阅器上做一下手脚：在Dep.target上缓存下订阅者，添加成功后再将其去掉就可以了。订阅者Watcher的实现如下：
+订阅者Watcher在初始化的时候需要将自己添加进订阅器Dep中，那该如何添加呢？我们已经知道监听器Observer是在get函数执行了添加订阅者Wather的操作的，所以我们只要在订阅者Watcher初始化的时候触发对应的get函数去执行添加订阅者操作即可，那要如何触发get的函数，再简单不过了，只要获取对应的属性值就可以触发了，核心原因就是因为我们使用了Object.defineProperty( )进行数据监听。这里还有一个细节点需要处理，我们只要在订阅者Watcher初始化的时候才需要添加订阅者，所以需要做一个判断操作，因此可以在订阅器上做一下手脚：在Dep.target上缓存下订阅者，添加成功后再将其去掉就可以了。订阅者Watcher的实现如下：
 ```js
 function Watcher(vm, exp, cb) {
     this.cb = cb;
@@ -248,7 +287,7 @@ SelfVue.prototype = {
 
 2.将模板指令对应的节点绑定对应的更新函数，初始化相应的订阅器
 
-为了解析模板，首先需要获取到dom元素，然后对含有dom元素上含有指令的节点进行处理，因此这个环节需要对dom操作比较频繁，所有可以先建一个fragment片段，将需要解析的dom节点存入fragment片段里再进行处理：
+为了解析模板，首先需要获取到dom元素，然后对含有dom元素上含有指令的节点进行处理，因此这个环节需要对dom操作比较频繁，所以可以先建一个fragment片段，将需要解析的dom节点存入fragment片段里再进行处理：
 ```js
 function nodeToFragment (el) {
     var fragment = document.createDocumentFragment();
@@ -261,7 +300,7 @@ function nodeToFragment (el) {
     return fragment;
 }
 ```
-接下来需要遍历各个节点，对含有相关指定的节点进行特殊处理，这里咱们先处理最简单的情况，只对带有 '\{ \{变量\} \}' 这种形式的指令进行处理，先简道难嘛，后面再考虑更多指令情况：
+接下来需要遍历各个节点，对含有相关指定的节点进行特殊处理，这里咱们先处理最简单的情况，只对带有 '\{ \{变量\} \}' 这种形式的指令进行处理，先简到难嘛，后面再考虑更多指令情况：
 ```js
 function compileElement (el) {
     var childNodes = el.childNodes;
