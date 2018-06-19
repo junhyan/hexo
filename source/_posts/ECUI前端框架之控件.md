@@ -2,6 +2,9 @@
 title: ECUI前端框架之控件
 date: 2018-03-08
 ---
+笔记，请忽略
+
+## 请忽略
 core init属性函数中调用了initEnvironment方法中var options = core.getOptions(document.body, 'data-ecui') || {}; 如果不是data-ecui，在init中var list = dom.getAttribute(el, ecuiName) ? [el] : []，其中ecuiName = 'ui'。list.push(item)便利所有带有ui:的都加入到list，然后
 list.forEach(function (item) {
 
@@ -11,7 +14,7 @@ list.forEach(function (item) {
 
   independentControls.push(control); ？？？？
   // 处理所有的委托操作，参见delegate ？？？？
-  
+
 
 
 
@@ -21,4 +24,4 @@ list.forEach(function (item) {
 
 
 
-转载请注明: http://jhyan.me/2017/12/08/JS高级程序设计---笔记（1）/
+转载请注明: http://jhyan.me
