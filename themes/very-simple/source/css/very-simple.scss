@@ -67,12 +67,12 @@ article {
 header {
     padding: 1em 0;
 
-    background: #333;
+    background: #2ca6cb;
     color: #F1F1F1;
 
     .container{
         font-family: $font-blog-title;
-        border-bottom: .3em solid #333;
+        border-bottom: .3em solid #2ca6cb;
 
         .title {
             color: #EEE;
@@ -106,7 +106,7 @@ header {
 nav {
     top: 0;
     position: sticky;
-    background: #333;
+    background: #2ca6cb;
     font-family: $font-mono;
     font-size: 1em;
     z-index: 10;
@@ -151,7 +151,7 @@ nav {
             bottom: 0;
             height: 3px;
             width: 0;
-            background: $color-underscore;
+            background: #00ffff;
             transition: width .25s;
         }
 
@@ -384,11 +384,11 @@ $post-time-space: 1em;
             font-size: 1.2em;
 
             &:hover {
-                border-bottom: 1px solid #666;
+                border-bottom: 1px solid #2ca6cb;
             }
 
             a {
-                color: #333;
+                color: #2ca6cb;
                 text-decoration: none;
                 border: none;
                 display: block;
@@ -502,10 +502,10 @@ $post-time-space: 1em;
 footer#footer {
     text-align: right;
     margin-top: 2em;
-    background: #333;
+    background: #2ca6cb;
 
     &, & a, & a:visited {
-        color: #AAA;
+        color: #fff;
     }
 
     & a:hover {
@@ -571,10 +571,10 @@ footer#footer {
     //box-sizing: border-box;
     //padding: 0 20px;
     text-align: right;
-    background: #333;
-    color: #CCC;
-    border-top: 2px solid #555;
-    border-bottom: 2px solid #555;
+    background: #2ca6cb;
+    color: #fff;
+    border-top: 2px solid #ececff;
+    border-bottom: 2px solid #ececff;
     display: flex;
     box-shadow: 0 0 2px 1px rgba(200, 200, 200, 0.8);
     transition: background-color .2s ease-in-out;
@@ -586,12 +586,13 @@ footer#footer {
     }
 
     &:hover {
-        background: #222;
+        background: #4a4aff;
     }
 
     .post-time {
         flex: 1;
-        text-align: left;
+        text-align: right;
+        padding-right: 30px;
         font-family: $font-mono;
         font-size: 14px;
         align-self: center;
