@@ -9,7 +9,8 @@ social:
   weibo:
   github: junhyan
   googleplus:
-  rss: /atom.xml
+  rss:
+  codingnet: https://coding.net/pages
 
 # Content
 fancybox: true # set to true if you want to use it
