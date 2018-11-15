@@ -17,7 +17,7 @@ WebKit接收各种网页或者资源数据，其中某些资源可能同步或�
 解释器根据词语构建节点，形成DOM树；
 如果节点是JavaScript代码，调用JavaScript引擎解释并执行；
 JavaScript代码可能会修改DOM树结构；
-如果节点依赖其他资源，如图片\css、视频等，调用资源加载器加载它们，但这些是异步加载的，不会阻碍当前DOM树继续创建；如果是JavaScript资源URL（没有标记异步方式），则需要停止当前DOM树创建，直到JavaScript加载并被JavaScript引擎执行后才继续DOM树的创建。
+如果节点依赖其他资源，如图片、css、视频等，调用资源加载器加载它们，但这些是异步加载的，不会阻碍当前DOM树继续创建；如果是JavaScript资源URL（没有标记异步方式），则需要停止当前DOM树创建，直到JavaScript加载并被JavaScript引擎执行后才继续DOM树的创建。
 ### 从DOM树到构建WebKit绘图上下文
 CSS文件被CSS解释器解释成内部表示；
 CSS解释器完成工作后，在DOM树上附加样式信息，生成RenderObject树；
