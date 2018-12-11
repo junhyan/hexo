@@ -1,9 +1,9 @@
 ---
 title: js 数组各方法的实现
-date: 2018-12-03
+date: 2018-12-08
 tags:
 ---
-总结下数组的各个方法的原生实现，逐渐积累。
+总结下数组的各个方法的原生实现，目前包括的方法有copyWithin，isArray，forEach，map，reduce等，逐渐积累。
 
 ### copyWithin()
 ```js
