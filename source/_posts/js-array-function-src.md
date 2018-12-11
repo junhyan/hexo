@@ -69,5 +69,115 @@ Array.prototype.copyWithin = function(target, start/*, end*/) {
     return O;
 };
 ```
+### isArray
+```js
+Array.isArray = function (arg) {
+    return Object.prototype.toString.call(arg) === '[object Array]';
+};
+```
+### forEach
+```js
+Array.prototype.forEach = function (callbackfn, thisArg) {
+    for (var i = 0, len = this.length; i < len; i++) {
+        callbackfn.call(thisArg, this[i], i, this);
+    }
+};
+```
+### map
+```js
+Array.prototype.map = function (callbackfn, thisArg) {
+    var ret = [];
+    for (var i = 0, len = this.length; i < len; i++) {
+        ret.push(callbackfn.call(thisArg, this[i], i, this));
+    }
+    return ret;
+};
+```
+### filter
+```js
+Array.prototype.filter = function (callbackfn, thisArg) {
+    var ret = [];
+    for (var i = 0, len = this.length; i < len; i++) {
+        if (callbackfn.call(thisArg, this[i], i, this)) {
+            ret.push(this[i]);
+        }
+    }
+    return ret;
+};
+```
+### some
+```js
+Array.prototype.some = function (callbackfn, thisArg) {
+    for (var i = 0, len = this.length; i < len; i++) {
+        if (callbackfn.call(thisArg, this[i], i, this)) {
+            return true;
+        }
+    }
+    return false;
+};
+```
+### every
+```js
+Array.prototype.every = function (callbackfn, thisArg) {
+    for (var i = 0, len = this.length; i < len; i++) {
+        if (!callbackfn.call(thisArg, this[i], i, this)) {
+            return false;
+        }
+    }
+    return true;
+};
 
+```
+### indexOf
+```js
+Array.prototype.indexOf = function (searchElement, fromIndex) {
+    for (var i = fromIndex ? Math.max(fromIndex, 0) : 0, len = this.length; i < len; i++) {
+        if (this[i] === searchElement) {
+            return i;
+        }
+    }
+    return -1;
+};
+```
+### lastIndexOf
+```js
+Array.prototype.lastIndexOf = function (searchElement, fromIndex) {
+    for (var i = fromIndex !== undefined ? Math.min(fromIndex, this.length - 1) : this.length - 1; i >= 0; i--) {
+        if (this[i] === searchElement) {
+            return i;
+        }
+    }
+    return -1;
+};
+```
 ### reduce
+```js
+Array.prototype.reduce = function (callbackfn, initialValue) {
+    var i = 0,
+        len = this.length;
+
+    if (initialValue === undefined) {
+        initialValue = this[i++];
+    }
+
+    for (; i < len; i++) {
+        initialValue = callbackfn(initialValue, this[i], i, this);
+    }
+    return initialValue;
+};
+```
+### reduceRight
+```js
+Array.prototype.reduceRight = function (callbackfn, initialValue) {
+    var len = this.length,
+        i = len;
+
+    if (initialValue === undefined) {
+        initialValue = this[--i];
+    }
+    for (; i--; ) {
+        initialValue = callbackfn(initialValue, this[i], i, this);
+    }
+    return initialValue;
+};
+```

@@ -224,3 +224,14 @@ function a () {
 }
 console.log(a());
 console.log(a());
+Array.prototype.reduce = function (fun, init) {
+    var res = init;
+    for (let i = 0; i < this.length; i++) {
+        res = fun(res, this[i])
+    }
+    return res;
+}
+var arr = new Array(1,2,3);
+var result = arr.reduce(function(res, item){return res+item}, 100);
+console.log(result);
+
